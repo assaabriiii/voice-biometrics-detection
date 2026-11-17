@@ -1,6 +1,6 @@
 # Where we left off (read this first in a new session)
 
-Last updated: 2026-11-17 03:45 UTC. Nothing is running. Full history: `PROGRESS.md`. Plan and rules: `PROJECT_FLOW.md`. Runtime rebuild: `RESUME.md`.
+Last updated: 2026-11-17 03:55 UTC. Nothing is running. Full history: `PROGRESS.md`. Plan and rules: `PROJECT_FLOW.md`. Runtime rebuild: `RESUME.md`.
 
 ## Speaker verification (S0-S4): finished for now
 
@@ -58,3 +58,6 @@ Next job is S5 (no code written yet): test candidate Persian voice-cloning TTS a
 ## Added 2026-11-17 03:45 UTC
 - S6a finished on the second Google account's GPU (shared-folder shortcut; see `CLAUDE.md` in the git repo for the two-account setup). Details and per-attack table: PROGRESS.md entry of 2026-11-17 03:40 UTC.
 - New code: `vbd/eval_cm.py`. New launcher: `logs/chain_cm.sh`.
+- S5a done: 1,200 simulated replay clips (`python -m vbd.spoof_replay`; Drive `data/spoof/replay.tar`, index `data/protocols/fa_spoof_replay.csv`). To use them on a fresh runtime: `mkdir -p /content/work/spoof && tar -xf data/spoof/replay.tar -C /content/work/spoof`. Before Persian training, 85% of replays pass the speaker engine and the ASVspoof-trained detectors are near chance on them (LCNN EER 39%); re-run with `python -m vbd.eval_spoof replay`.
+- S5b (cloned TTS) and S5c (voice conversion) not started. `vbd/spoof_probe.py` is written but was never run: launching it was blocked by the Claude Code permission system on 2026-11-17 and needs the user's approval. Run with `python -m vbd.spoof_probe 6` (GPU); output `results/reports/s5_probe_scores.csv` and sample audio in `data/spoof/probe/`.
+- Not yet in git (Drive only, the browser did not deliver the sync archive): `vbd/spoof_replay.py`, `vbd/eval_spoof.py`, `vbd/spoof_probe.py`, `data/protocols/fa_spoof_replay.csv`, `results/reports/s5_replay_zeroshot.csv`, `logs/spoof_replay.log`, `logs/eval_spoof_replay.log`. Include them in the next sync.

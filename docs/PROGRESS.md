@@ -391,3 +391,35 @@ LCNN is the primary countermeasure candidate (better accuracy, far lower cost); 
 
 ### Next
 S5: Persian spoof generation (simulated replay, cloned TTS, voice conversion), starting with a quality test of candidate models on a few samples.
+
+## 2026-11-17 03:50 UTC — S5a: simulated replay set generated and scored before any Persian detector training
+
+### Generation (`python -m vbd.spoof_replay`, CPU, 32 s; log `logs/spoof_replay.log`)
+- 1,200 clips: 120 speakers x 10, 1.5 hours of audio. Index: `data/protocols/fa_spoof_replay.csv`. Audio: Drive `data/spoof/replay.tar` (110 MB, FLAC 16 kHz).
+- Source of each clip: a genuine recording of the target speaker that is neither an enrolment nor a test clip (3-10 s).
+- Chain: loudspeaker model (device band-pass, one resonance, tanh soft clipping) -> room impulse response (RIRS_NOISES simulated rooms) -> ambient noise (MUSAN noise, SNR 18-35 dB) -> 70 Hz microphone high-pass.
+- Three device profiles, 400 clips each: phone speaker (450-7200 Hz, strong clipping), laptop speaker (220-7600 Hz), external speaker (90-7900 Hz, light clipping).
+- Substitution: the proposal asked for physical replays through 3 real playback devices. This is a software model; it has no real loudspeaker or microphone response and no recorded room. Results on it must be labelled "simulated replay".
+
+### Scoring (`python -m vbd.eval_spoof replay`; table `results/reports/s5_replay_zeroshot.csv`)
+Speaker engine: stage2v2, replay clip scored against its target's enrolment template. Threshold 0.292 = pooled over all five folds at FAR 0.8% on the clean impostor trials (a quick pooled threshold for this check only, not the per-rotation validation thresholds of the reported results); genuine clean test clips pass it 94.0% of the time.
+Detectors: the ASVspoof-trained LCNN and RawNet2, no Persian training, compared against the 600 genuine clean Persian test clips. All figures in %.
+
+| Device | Passes speaker engine | LCNN EER | LCNN accepts (ASVspoof threshold) | RawNet2 EER | RawNet2 accepts | Passes both, LCNN | Passes both, RawNet2 |
+|---|---|---|---|---|---|---|---|
+| external speaker | 90.5 | 39.0 | 93.3 | 41.7 | 70.5 | 84.5 | 64.0 |
+| laptop speaker | 81.8 | 38.7 | 93.5 | 48.8 | 81.0 | 76.5 | 65.3 |
+| phone speaker | 81.5 | 39.5 | 96.0 | 47.3 | 84.8 | 78.0 | 69.5 |
+| **all 1,200** | **84.6** | **39.2** | **94.3** | **46.2** | **78.8** | **79.7** | **66.3** |
+
+Reading:
+- Replay keeps the speaker's identity: 85% of replays pass the speaker engine (genuine clips: 94%). The speaker engine gives no protection against replay, as expected.
+- Detectors trained only on ASVspoof LA (synthetic speech and voice conversion) do not detect replay: EER 39-46%, near chance. Without Persian replay training about 80% of replay attacks would pass the whole system with LCNN (criterion 7 target: <= 10%).
+- This is the "before" number for S6b. It also shows the cost of not having ASVspoof 2019 PA (the replay part of the benchmark; download blocked with HTTP 403): replay detection has to be learnt entirely from the simulated Persian set.
+- A warning about a failed 690 MB GPU allocation appeared in `logs/eval_spoof_replay.log`; the run finished and wrote its table. Not investigated.
+
+### Cloned TTS and voice conversion: not started
+`vbd/spoof_probe.py` is written (kNN-VC voice conversion, MMS Persian TTS, and TTS followed by kNN-VC, on 6 speakers, scored with the speaker engine and both detectors) but has NOT been run: the Claude Code permission system blocked the launch. Waiting for the user's decision.
+
+### Git mirror gap
+The browser did not deliver the second sync archive of this session. `vbd/spoof_replay.py`, `vbd/eval_spoof.py`, `vbd/spoof_probe.py`, `data/protocols/fa_spoof_replay.csv`, `results/reports/s5_replay_zeroshot.csv` and the two S5 logs exist on Drive only until the next sync.

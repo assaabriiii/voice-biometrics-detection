@@ -79,7 +79,8 @@ FA-EVAL-120: 120 Common Voice Persian speakers, 5 speaker-disjoint folds of 24. 
 - CM base training done on ASVspoof 2019 LA: LCNN eval EER 6.47% (dev 0.58%), RawNet2 7.54% (dev 1.38%). Both fail on voice-conversion attacks A17/A18, and both wrongly reject genuine Persian speech at the ASVspoof threshold (LCNN 6%, 23% on GSM-FR; RawNet2 13%), so Persian fine-tuning is required before fusion. LCNN is the primary candidate.
 - Service logic and embedding-only store: `vbd/system.py` (thresholds are placeholders until fusion is done). Storage inspection passed (one SQLite file, vectors only).
 - Latency: p95 2.30 s on Colab's 2-vCPU CPU runtime (target <= 2 s on an 8-core CPU, so unverified on the specified hardware). ECAPA embedding is 94% of the time; no optimisation tried yet.
-- Not started: Persian spoof generation, CM fine-tuning, score fusion, demo UI, final report.
+- Persian spoofs: 1,200 simulated replay clips done (`vbd/spoof_replay.py`); untrained detectors are near chance on them (`vbd/eval_spoof.py`). Cloned TTS and voice conversion not started; `vbd/spoof_probe.py` is written but unrun (see `docs/STATE.md`).
+- Not started: CM fine-tuning on Persian spoofs, score fusion, demo UI, final report.
 
 ## Syncing Drive to this repo
 
