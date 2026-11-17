@@ -1,0 +1,5 @@
+variant,target_far,far,far_ci,frr,frr_ci,far_fold_std,frr_fold_std
+A_channel_thresholds,0.8,0.82,"(0.64, 1.01)",10.89,"(8.0, 14.28)",0.26,3.16
+A_channel_thresholds,0.1,0.12,"(0.07, 0.18)",24.28,"(20.0, 29.06)",0.07,3.39
+B_nb_template_channel_thresholds,0.8,0.83,"(0.66, 1.0)",11.78,"(8.78, 15.11)",0.19,2.33
+B_nb_template_channel_thresholds,0.1,0.13,"(0.07, 0.2)",24.28,"(20.0, 29.28)",0.07,2.5

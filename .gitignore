@@ -1,0 +1,25 @@
+# Models, audio, caches and other large artefacts live on Google Drive, never in git
+*.pt
+*.ckpt
+*.onnx
+*.npz
+*.npy
+*.pkl
+*.i16
+*.parquet
+*.tar
+*.tar.gz
+*.zip
+*.wav
+*.mp3
+*.flac
+*.sqlite
+*.csv.gz
+checkpoints/
+features/
+data/raw/
+data/spoof/
+tools/
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
