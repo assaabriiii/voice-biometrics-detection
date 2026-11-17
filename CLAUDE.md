@@ -36,7 +36,7 @@ The plan, the 10 acceptance criteria and every deviation from the proposal are i
 | Protocol (speakers, folds, exclusions) | `data/protocols/` |
 | Models, embeddings, raw data, trial score files | Drive only |
 
-`vbd/` modules: `config` (paths, constants), `data` (manifest, FA-EVAL-120 selection, folds, pool), `augment` (noise, reverb, codecs), `cache` / `codec_cache` (decoded-audio memmaps), `metrics` (EER, FAR/FRR, bootstrap), `sv` (embeddings, scoring, AS-norm, reports), `conditions` (test conditions + evaluation), `train_sv` (stage 2), `train_sv3` (stage 3 per-fold adaptation), `cm` (LCNN, RawNet2), `train_cm` (CM on ASVspoof), `system` (enrol/verify service + embedding-only store), `bootstrap` (rebuild Colab working dir).
+`vbd/` modules: `config` (paths, constants), `data` (manifest, FA-EVAL-120 selection, folds, pool), `augment` (noise, reverb, codecs), `cache` / `codec_cache` (decoded-audio memmaps), `metrics` (EER, FAR/FRR, bootstrap), `sv` (embeddings, scoring, AS-norm, reports), `conditions` (test conditions + evaluation), `train_sv` (stage 2), `train_sv3` (stage 3 per-fold adaptation), `cm` (LCNN, RawNet2), `train_cm` (CM on ASVspoof), `eval_cm` (CM scoring on the ASVspoof evaluation split and on genuine Persian speech), `system` (enrol/verify service + embedding-only store), `bootstrap` (rebuild Colab working dir).
 
 ## Which file is authored where
 
@@ -73,10 +73,10 @@ Lessons already paid for:
 
 FA-EVAL-120: 120 Common Voice Persian speakers, 5 speaker-disjoint folds of 24. Per speaker 5 enrolment clips and 15 test clips (5 clean, 5 noisy, 5 simulated telephone). Each test clip is scored against all 24 templates of its fold: 1,800 genuine and 41,400 impostor trials (`main15`). Rotation k: test fold k, validation fold k+1, the other three for adaptation. Thresholds come from the validation fold at FAR 0.8% (and 0.1%) and are applied unchanged to the test fold. Extra controlled conditions use the clean clips: noise at 10 dB, GSM-FR, AMR-NB, G.711, Opus, and a >= 5 s set. Everything is text-independent because public Persian data has no repeated passphrases.
 
-## Status snapshot (2026-11-17; `docs/STATE.md` is authoritative)
+## Status snapshot (2026-11-17 03:45 UTC; `docs/STATE.md` is authoritative)
 
 - SV reported model: `checkpoints/sv/stage2v2/best.pt`. On `main15`: FAR 0.82% (target <= 1, met), **FRR 10.22% (target <= 10, missed)**; all EER targets met on point estimates. Per-fold adaptation (stage 3) gave 10.17%, a near-null result.
-- CM: LCNN at 11 of 30 epochs on ASVspoof 2019 LA (dev EER 0.63%); RawNet2 not started.
+- CM base training done on ASVspoof 2019 LA: LCNN eval EER 6.47% (dev 0.58%), RawNet2 7.54% (dev 1.38%). Both fail on voice-conversion attacks A17/A18, and both wrongly reject genuine Persian speech at the ASVspoof threshold (LCNN 6%, 23% on GSM-FR; RawNet2 13%), so Persian fine-tuning is required before fusion. LCNN is the primary candidate.
 - Service logic and embedding-only store: `vbd/system.py` (thresholds are placeholders until fusion is done). Storage inspection passed (one SQLite file, vectors only).
 - Latency: p95 2.30 s on Colab's 2-vCPU CPU runtime (target <= 2 s on an 8-core CPU, so unverified on the specified hardware). ECAPA embedding is 94% of the time; no optimisation tried yet.
 - Not started: Persian spoof generation, CM fine-tuning, score fusion, demo UI, final report.
@@ -87,7 +87,7 @@ There is no direct path from Drive to the Mac. The method that worked: a Colab c
 
 ## Next steps, in order
 
-1. Finish LCNN, train RawNet2 (`docs/STATE.md` has the command); report ASVspoof 2019 LA evaluation-split EER.
+1. Done: LCNN and RawNet2 on ASVspoof 2019 LA, scored with `python -m vbd.eval_cm`.
 2. Generate 3,600 Persian spoofs for the 120 speakers (1,200 each: simulated replay, cloned TTS, voice conversion). Candidate open models are listed in `docs/PROGRESS.md`; none is tested. Test quality on a few samples before generating in bulk.
 3. Fine-tune the CMs on Persian spoofs inside the 5-fold protocol; leave-one-attack-out; confirm noisy/telephone bona fide audio is not flagged.
 4. Fuse SV and CM scores; measure integrated FAR, FRR and spoof acceptance (criteria 7, 8).

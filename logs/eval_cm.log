@@ -1,0 +1,70 @@
+03:19:32 asv_test: row group 0/713
+03:19:44 asv_test: row group 50/713
+03:19:58 asv_test: row group 100/713
+03:20:06 asv_test: row group 150/713
+03:20:23 asv_test: row group 200/713
+03:20:36 asv_test: row group 250/713
+03:20:47 asv_test: row group 300/713
+03:20:58 asv_test: row group 350/713
+03:21:11 asv_test: row group 400/713
+03:21:25 asv_test: row group 450/713
+03:21:36 asv_test: row group 500/713
+03:21:46 asv_test: row group 550/713
+03:21:58 asv_test: row group 600/713
+03:22:13 asv_test: row group 650/713
+03:22:24 asv_test: row group 700/713
+03:22:26 caches ready 180 s
+03:25:19 persian conditions ready
+03:26:52 lcnn dev EER 0.58 eval EER 6.47
+03:29:18 rawnet2 dev EER 1.38 eval EER 7.54
+  model split attack  n_bona  n_spoof   eer  spoof_accept_at_dev_thr  bona_reject_at_dev_thr
+   lcnn   dev    all    2548    22296  0.58                      NaN                     NaN
+   lcnn  eval    all    7355    63882  6.47                    12.25                    0.84
+   lcnn  eval    A07    7355     4914  1.22                     2.16                     NaN
+   lcnn  eval    A08    7355     4914  0.81                     0.81                     NaN
+   lcnn  eval    A09    7355     4914  0.20                     0.00                     NaN
+   lcnn  eval    A10    7355     4914  1.43                     4.15                     NaN
+   lcnn  eval    A11    7355     4914  0.71                     0.57                     NaN
+   lcnn  eval    A12    7355     4914  1.12                     1.49                     NaN
+   lcnn  eval    A13    7355     4914  0.47                     0.04                     NaN
+   lcnn  eval    A14    7355     4914  0.73                     0.61                     NaN
+   lcnn  eval    A15    7355     4914  0.67                     0.47                     NaN
+   lcnn  eval    A16    7355     4914  0.95                     1.12                     NaN
+   lcnn  eval    A17    7355     4914 10.28                    37.16                     NaN
+   lcnn  eval    A18    7355     4914 26.33                    94.30                     NaN
+   lcnn  eval    A19    7355     4914  4.70                    16.38                     NaN
+rawnet2   dev    all    2548    22296  1.38                      NaN                     NaN
+rawnet2  eval    all    7355    63882  7.54                    16.50                    1.51
+rawnet2  eval    A07    7355     4914  3.02                     7.53                     NaN
+rawnet2  eval    A08    7355     4914  5.21                    12.29                     NaN
+rawnet2  eval    A09    7355     4914  0.69                     0.14                     NaN
+rawnet2  eval    A10    7355     4914  3.48                    10.11                     NaN
+rawnet2  eval    A11    7355     4914  3.01                     7.35                     NaN
+rawnet2  eval    A12    7355     4914  4.07                    13.43                     NaN
+rawnet2  eval    A13    7355     4914  1.02                     0.24                     NaN
+rawnet2  eval    A14    7355     4914  2.23                     3.74                     NaN
+rawnet2  eval    A15    7355     4914  3.28                    10.38                     NaN
+rawnet2  eval    A16    7355     4914  2.30                     4.58                     NaN
+rawnet2  eval    A17    7355     4914 12.86                    42.31                     NaN
+rawnet2  eval    A18    7355     4914 30.79                    91.45                     NaN
+rawnet2  eval    A19    7355     4914  4.01                    10.93                     NaN
+  model    cond   n  dev_eer_threshold  bona_reject_pct  live_median  live_p05
+   lcnn  amr_nb 600              -1.93             5.83         6.11     -2.55
+   lcnn   clean 600              -1.93             6.00         7.02     -2.66
+   lcnn   g711a 600              -1.93             7.33         5.41     -3.33
+   lcnn  gsm_fr 600              -1.93            22.83         2.48     -6.36
+   lcnn   noisy 600              -1.93             6.50         3.15     -2.36
+   lcnn opus_nb 600              -1.93             3.50         7.15     -1.10
+   lcnn   snr10 600              -1.93             6.83         2.82     -2.54
+   lcnn     tel 600              -1.93             6.17         3.62     -2.26
+   lcnn    ti5s 600              -1.93             5.33         6.90     -1.98
+rawnet2  amr_nb 600              -3.08            14.50         0.70     -5.29
+rawnet2   clean 600              -3.08            13.00         1.74     -5.41
+rawnet2   g711a 600              -3.08            10.67         1.33     -5.00
+rawnet2  gsm_fr 600              -3.08            17.00         0.30     -5.78
+rawnet2   noisy 600              -3.08             9.67         1.55     -5.04
+rawnet2 opus_nb 600              -3.08            15.00         0.90     -5.13
+rawnet2   snr10 600              -3.08             9.67         1.37     -4.41
+rawnet2     tel 600              -3.08            13.00         0.60     -5.07
+rawnet2    ti5s 600              -3.08            12.17         1.76     -5.14
+03:29:18 EVAL_CM_DONE

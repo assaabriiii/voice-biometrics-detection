@@ -1,0 +1,35 @@
+cache adapt: 0/5978
+cache adapt: 5000/5978
+20:29:50 amr_nb: 400/5978 clips, 34 s
+20:30:14 amr_nb: 800/5978 clips, 58 s
+20:30:39 amr_nb: 1200/5978 clips, 82 s
+20:31:00 amr_nb: 1600/5978 clips, 104 s
+20:31:23 amr_nb: 2000/5978 clips, 126 s
+20:31:53 amr_nb: 2400/5978 clips, 157 s
+20:32:18 amr_nb: 2800/5978 clips, 182 s
+20:32:47 amr_nb: 3200/5978 clips, 210 s
+20:33:12 amr_nb: 3600/5978 clips, 236 s
+20:33:38 amr_nb: 4000/5978 clips, 261 s
+20:34:00 amr_nb: 4400/5978 clips, 283 s
+20:34:31 amr_nb: 4800/5978 clips, 315 s
+20:34:58 amr_nb: 5200/5978 clips, 342 s
+20:35:24 amr_nb: 5600/5978 clips, 368 s
+20:35:45 amr_nb: 5978/5978 clips, 389 s
+CODEC_DONE amr_nb
+20:36:28 gsm_fr: 400/5978 clips, 24 s
+20:36:40 gsm_fr: 800/5978 clips, 36 s
+20:36:53 gsm_fr: 1200/5978 clips, 49 s
+20:37:05 gsm_fr: 1600/5978 clips, 61 s
+20:37:19 gsm_fr: 2000/5978 clips, 75 s
+20:37:37 gsm_fr: 2400/5978 clips, 94 s
+20:37:51 gsm_fr: 2800/5978 clips, 108 s
+20:38:08 gsm_fr: 3200/5978 clips, 124 s
+20:38:22 gsm_fr: 3600/5978 clips, 138 s
+20:38:35 gsm_fr: 4000/5978 clips, 152 s
+20:38:52 gsm_fr: 4400/5978 clips, 168 s
+20:39:06 gsm_fr: 4800/5978 clips, 182 s
+20:39:19 gsm_fr: 5200/5978 clips, 196 s
+20:39:32 gsm_fr: 5600/5978 clips, 208 s
+20:39:43 gsm_fr: 5978/5978 clips, 219 s
+CODEC_DONE gsm_fr
+ADAPT_READY

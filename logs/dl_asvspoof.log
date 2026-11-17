@@ -1,0 +1,6 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+18:55:11 README.md 0 MB
+18:55:29 data/train-00000-of-00001.parquet 1586 MB
+18:55:54 data/validation-00000-of-00001.parquet 1576 MB
+18:57:50 data/test-00000-of-00001.parquet 4382 MB
+ASV_DONE

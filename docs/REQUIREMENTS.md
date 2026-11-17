@@ -50,14 +50,14 @@ The proposal's data strategy is "pretrain on large public data, then fine-tune a
 | 1 | Requirements analysis, success metrics, threat model, initial architecture | partial | Metrics fixed in this file; threat-model and architecture documents not written |
 | 2 | Team training; public data prepared; Persian data and spoofs collected; 5-fold speaker-disjoint split | partial | Public data and the 5-fold protocol done; spoofs not started; training course out of scope |
 | 3 | Pre-processing (resampling, VAD, silence removal, noise reduction, amplitude normalisation, noise/codec augmentation) and features (MFCC, log-mel) | partial | Resampling, normalisation, augmentation done; features are the models' own (fbank for ECAPA, LFCC for LCNN, raw waveform for RawNet2); no VAD or noise reduction |
-| 4 | Baseline (i-vector or x-vector), then ECAPA-TDNN for SV and LCNN / RawNet2 for liveness; compare accuracy and compute cost; choose the final model on accuracy, latency, codec/noise robustness and simplicity | partial | x-vector baseline and ECAPA done and compared; LCNN partly trained; RawNet2 not started; CM comparison and final choice pending |
+| 4 | Baseline (i-vector or x-vector), then ECAPA-TDNN for SV and LCNN / RawNet2 for liveness; compare accuracy and compute cost; choose the final model on accuracy, latency, codec/noise robustness and simplicity | partial | x-vector baseline and ECAPA done and compared; LCNN and RawNet2 trained on ASVspoof 2019 LA and compared (eval EER 6.47% vs 7.54%; LCNN 0.34 M parameters, RawNet2 17.6 M; `results/reports/s6a_cm_asvspoof2019la.csv`); LCNN is the primary candidate; final CM choice after Persian fine-tuning |
 | 5 | Fuse speaker and liveness scores; thresholds set only on validation data from the DET curve, applied unchanged to test; operating points at FAR 0.8% (for the <= 1% commitment) and FAR 0.1% | partial | SV operating points done this way; fusion not started |
 | 6 | Evaluation by speaker-disjoint 5-fold cross-validation; enrol on session 1, test on sessions 2 and 3; report FAR, FRR, EER, DET curves, spoof acceptance and latency per condition (quiet, natural noise, controlled noise at SNR 10 dB, GSM/AMR-NB and VoIP codecs, real call) with 95% bootstrap CIs over speakers and mean +/- std over the 5 folds | partial | Done for SV. Missing: DET curve figures, spoof metrics |
 | 6b | Supplementary leave-one-speaker-out for the light final stage (score normalisation and thresholding), compared with the 5-fold result | not started | |
 | 6c | Leave-one-attack-out: train the CM on two attack types, test on the third | not started | |
 | 7 | Demo interface (Streamlit or FastAPI) showing enrolment, verification and the spoof result; documentation | not started | |
 
-Four-stage training plan in the proposal and its status: (1) pretrained SV weights + CM base training on ASVspoof — SV done, CM in progress; (2) Persian language fine-tuning with AAM-Softmax — done (`stage2v2`); (3) scenario/channel adaptation on the 72 adaptation speakers per rotation with a low learning rate on the last layers — done, near-null gain; (4) threshold setting, early stopping and score normalisation on the validation fold — thresholds done; AS-norm tested and gave no gain.
+Four-stage training plan in the proposal and its status: (1) pretrained SV weights + CM base training on ASVspoof — SV done, CM base training done (LCNN, RawNet2); (2) Persian language fine-tuning with AAM-Softmax — done (`stage2v2`); (3) scenario/channel adaptation on the 72 adaptation speakers per rotation with a low learning rate on the last layers — done, near-null gain; (4) threshold setting, early stopping and score normalisation on the validation fold — thresholds done; AS-norm tested and gave no gain.
 
 ## 5. Committed acceptance criteria
 
@@ -105,7 +105,7 @@ Under the no-recording rule the demo interface is built, and the scripted run us
 | Threat model | not started | |
 | System architecture document | not started | |
 | Initial dataset and labelling guideline | partial | protocol files in `data/protocols/`; spoof set pending |
-| Trained models | partial | SV done (Drive `checkpoints/sv/stage2v2`); CM in progress |
+| Trained models | partial | SV done (Drive `checkpoints/sv/stage2v2`); CM base models done (Drive `checkpoints/cm/lcnn_asv19la`, `rawnet2_asv19la`), Persian fine-tuning pending |
 | Software code and MVP | partial | `vbd/` |
 | Evaluation report with trial lists, score files and reproduction scripts | partial | tables in `results/reports/`; trial score files on Drive `results/scores/` |
 | Demo interface | not started | |
@@ -120,7 +120,7 @@ Under the no-recording rule the demo interface is built, and the scripted run us
 | Accuracy loss from noise, codecs, voice change | noise/codec augmentation, multi-session enrolment, gradual template update | Augmentation closed most of the codec gap (AMR-NB EER 10.66 -> 4.83); template update not implemented |
 | Model too heavy for the 2 s limit | light architecture, quantisation and pruning | p95 2.30 s on 2 vCPUs; no optimisation tried |
 | Overfitting to few speakers | speaker-disjoint 5-fold CV, pretrained models, early stopping | Applied; duplicate identities in Common Voice found and screened |
-| CM fails on unseen attacks | wide range of TTS/VC systems, separate unseen-attack evaluation | Pending |
+| CM fails on unseen attacks | wide range of TTS/VC systems, separate unseen-attack evaluation | Risk confirmed on ASVspoof 2019 LA: 10 of 13 unseen attacks handled, voice-conversion attacks A17/A18 are not (LCNN EER 10.3% / 26.3%). Persian unseen-attack test pending |
 | Channel mismatch lab vs telephone | codec simulation, score normalisation, real-call test data | Real-codec augmentation helped; AS-norm gave no gain; no real calls |
 | FAR 0.1% not reachable or not provable | commit to FAR <= 1% with margin, report CIs, defer 0.1% to phase 2 | FAR 0.82% met; at the 0.1% target the measured FAR is 0.13% with FRR 23% |
 | Limited compute | rented cloud GPU, pretrained models, mixed precision | Free Colab T4, about 3.5 GPU-hours per account per day |

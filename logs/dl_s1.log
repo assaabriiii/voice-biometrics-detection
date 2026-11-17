@@ -1,0 +1,15 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+13:12:26 have /content/drive/MyDrive/voice-biometrics-detection/data/raw/cv22_fa/fa_train_0.tar 732.996608 MB
+13:12:30 extracted train
+13:12:36 have /content/drive/MyDrive/voice-biometrics-detection/data/raw/cv22_fa/fa_dev_0.tar 331.032576 MB
+13:12:38 extracted dev
+13:12:46 have /content/drive/MyDrive/voice-biometrics-detection/data/raw/cv22_fa/fa_test_0.tar 408.689664 MB
+13:12:53 extracted test
+13:13:08 have /content/drive/MyDrive/voice-biometrics-detection/data/raw/cv22_fa/fa_other_0.tar 819.971072 MB
+13:13:12 extracted other
+13:13:15 CV_DONE
+13:19:30 have /content/drive/MyDrive/voice-biometrics-detection/data/raw/rirs_noises.zip 1.311166223 GB
+13:21:32 extracted rirs_noises.zip
+13:45:05 have /content/drive/MyDrive/voice-biometrics-detection/data/raw/musan.tar.gz 11.086114085 GB
+13:50:57 extracted musan.tar.gz
+13:50:57 ALL_DONE

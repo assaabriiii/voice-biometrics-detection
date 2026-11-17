@@ -1,0 +1,124 @@
+{"event": "start", "val_fold": 1, "test_fold": 0, "n_adapt": 69, "dropped_dup": ["S00070", "S00353", "S03341"], "n_pool": 734, "t": "20:40:29", "rot": 0}
+Could not parse CUDA device string 'cuda': not enough values to unpack (expected 2, got 1). Falling back to device 0.
+[W1116 20:40:42.695769305 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 748683264 bytes (free: 322764800, total: 15637086208).
+{"event": "val_base", "val_eer": 5.000000000000003, "t": "20:40:43", "rot": 0}
+{"event": "epoch", "epoch": 0, "loss": 2.920591664711634, "acc": 0.6068229166666667, "val_eer": 5.2777777777777795, "sec": 146, "t": "20:43:13", "rot": 0}
+{"event": "epoch", "epoch": 1, "loss": 1.3454211390018462, "acc": 0.7242708333333333, "val_eer": 5.271739130434781, "sec": 146, "t": "20:45:39", "rot": 0}
+{"event": "epoch", "epoch": 2, "loss": 1.2604115263621012, "acc": 0.7388020833333333, "val_eer": 5.2777777777777795, "sec": 156, "t": "20:48:14", "rot": 0}
+{"event": "done", "val_base": 5.000000000000003, "val_best": 5.000000000000003, "best_epoch": -1, "t": "20:48:42", "rot": 0}
+{"event": "start", "val_fold": 2, "test_fold": 1, "n_adapt": 70, "dropped_dup": ["S00485", "S01155"], "n_pool": 734, "t": "20:49:08", "rot": 1}
+Could not parse CUDA device string 'cuda': not enough values to unpack (expected 2, got 1). Falling back to device 0.
+[W1116 20:49:19.246179476 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 811597824 bytes (free: 396165120, total: 15637086208).
+{"event": "val_base", "val_eer": 2.5000000000000013, "t": "20:49:21", "rot": 1}
+{"event": "epoch", "epoch": 0, "loss": 2.9899957537651063, "acc": 0.5944270833333334, "val_eer": 2.5000000000000013, "sec": 147, "t": "20:51:51", "rot": 1}
+{"event": "epoch", "epoch": 1, "loss": 1.4179569574197133, "acc": 0.7097916666666667, "val_eer": 2.5120772946859926, "sec": 124, "t": "20:53:55", "rot": 1}
+{"event": "epoch", "epoch": 2, "loss": 1.3312380691369374, "acc": 0.72546875, "val_eer": 2.7113526570048334, "sec": 126, "t": "20:56:01", "rot": 1}
+{"event": "done", "val_base": 2.5000000000000013, "val_best": 2.5000000000000013, "best_epoch": -1, "t": "20:56:29", "rot": 1}
+{"event": "start", "val_fold": 3, "test_fold": 2, "n_adapt": 69, "dropped_dup": ["S00485", "S01671", "S03824"], "n_pool": 734, "t": "20:56:55", "rot": 2}
+Could not parse CUDA device string 'cuda': not enough values to unpack (expected 2, got 1). Falling back to device 0.
+[W1116 20:57:06.431380596 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 855638016 bytes (free: 305987584, total: 15637086208).
+{"event": "val_base", "val_eer": 4.166666666666664, "t": "20:57:08", "rot": 2}
+{"event": "epoch", "epoch": 0, "loss": 3.0843990526596703, "acc": 0.5796875, "val_eer": 4.450483091787441, "sec": 130, "t": "20:59:22", "rot": 2}
+{"event": "epoch", "epoch": 1, "loss": 1.4817693702379862, "acc": 0.6891666666666667, "val_eer": 4.722222222222225, "sec": 125, "t": "21:01:27", "rot": 2}
+{"event": "epoch", "epoch": 2, "loss": 1.3610025362173717, "acc": 0.7160416666666667, "val_eer": 4.673913043478259, "sec": 126, "t": "21:03:33", "rot": 2}
+{"event": "done", "val_base": 4.166666666666664, "val_best": 4.166666666666664, "best_epoch": -1, "t": "21:04:02", "rot": 2}
+{"event": "start", "val_fold": 4, "test_fold": 3, "n_adapt": 69, "dropped_dup": ["S01671", "S02732", "S03253"], "n_pool": 734, "t": "21:04:28", "rot": 3}
+Could not parse CUDA device string 'cuda': not enough values to unpack (expected 2, got 1). Falling back to device 0.
+[W1116 21:04:41.032523942 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 757071872 bytes (free: 465371136, total: 15637086208).
+{"event": "val_base", "val_eer": 3.665458937198069, "t": "21:04:43", "rot": 3}
+{"event": "epoch", "epoch": 0, "loss": 3.0144972817103066, "acc": 0.588125, "val_eer": 3.5507246376811583, "sec": 144, "t": "21:07:11", "rot": 3}
+{"event": "epoch", "epoch": 1, "loss": 1.4028604580958683, "acc": 0.7061979166666666, "val_eer": 3.6111111111111103, "sec": 142, "t": "21:09:34", "rot": 3}
+{"event": "epoch", "epoch": 2, "loss": 1.3517825299501418, "acc": 0.7136458333333333, "val_eer": 3.6111111111111103, "sec": 147, "t": "21:12:01", "rot": 3}
+{"event": "done", "val_base": 3.665458937198069, "val_best": 3.5507246376811583, "best_epoch": 0, "t": "21:12:30", "rot": 3}
+{"event": "start", "val_fold": 0, "test_fold": 4, "n_adapt": 69, "dropped_dup": ["S01500", "S03253", "S03341"], "n_pool": 734, "t": "21:12:56", "rot": 4}
+Could not parse CUDA device string 'cuda': not enough values to unpack (expected 2, got 1). Falling back to device 0.
+[W1116 21:13:08.766870998 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 782237696 bytes (free: 735903744, total: 15637086208).
+{"event": "val_base", "val_eer": 4.208937198067632, "t": "21:13:09", "rot": 4}
+{"event": "epoch", "epoch": 0, "loss": 3.000212831099828, "acc": 0.5908854166666667, "val_eer": 4.408212560386474, "sec": 145, "t": "21:15:38", "rot": 4}
+{"event": "epoch", "epoch": 1, "loss": 1.3408393520116806, "acc": 0.7158333333333333, "val_eer": 4.166666666666664, "sec": 139, "t": "21:17:56", "rot": 4}
+{"event": "epoch", "epoch": 2, "loss": 1.2770553173621495, "acc": 0.7331770833333333, "val_eer": 4.1968599033816405, "sec": 147, "t": "21:20:24", "rot": 4}
+{"event": "done", "val_base": 4.208937198067632, "val_best": 4.166666666666664, "best_epoch": 1, "t": "21:20:51", "rot": 4}
+STAGE3_ALL_DONE
+{"event": "cache", "msg": "asv_train: row group 0/254", "t": "21:21:13"}
+{"event": "cache", "msg": "asv_train: row group 50/254", "t": "21:21:34"}
+{"event": "cache", "msg": "asv_train: row group 100/254", "t": "21:21:49"}
+{"event": "cache", "msg": "asv_train: row group 150/254", "t": "21:22:00"}
+{"event": "cache", "msg": "asv_train: row group 200/254", "t": "21:22:18"}
+{"event": "cache", "msg": "asv_train: row group 250/254", "t": "21:22:36"}
+{"event": "cache", "msg": "asv_validation: row group 0/249", "t": "21:22:39"}
+{"event": "cache", "msg": "asv_validation: row group 50/249", "t": "21:23:03"}
+{"event": "cache", "msg": "asv_validation: row group 100/249", "t": "21:23:19"}
+{"event": "cache", "msg": "asv_validation: row group 150/249", "t": "21:23:39"}
+{"event": "cache", "msg": "asv_validation: row group 200/249", "t": "21:23:56"}
+{"event": "it", "epoch": 0, "it": 0, "n_it": 396, "loss": 0.6957395672798157, "sec": 13, "t": "21:24:34"}
+{"event": "it", "epoch": 0, "it": 100, "n_it": 396, "loss": 0.6807813668251037, "sec": 44, "t": "21:25:05"}
+{"event": "it", "epoch": 0, "it": 200, "n_it": 396, "loss": 0.5163633799552918, "sec": 84, "t": "21:25:45"}
+{"event": "it", "epoch": 0, "it": 300, "n_it": 396, "loss": 0.37427965223789217, "sec": 115, "t": "21:26:16"}
+{"event": "epoch", "epoch": 0, "loss": 0.47302244731573145, "dev_eer": 10.00706422338746, "sec": 173, "t": "21:27:14"}
+{"event": "saved_best", "epoch": 0, "dev_eer": 10.00706422338746, "t": "21:27:14"}
+{"event": "it", "epoch": 1, "it": 0, "n_it": 396, "loss": 0.23334914445877075, "sec": 1, "t": "21:27:15"}
+{"event": "it", "epoch": 1, "it": 100, "n_it": 396, "loss": 0.25265475958585737, "sec": 30, "t": "21:27:44"}
+{"event": "it", "epoch": 1, "it": 200, "n_it": 396, "loss": 0.21367531538009643, "sec": 60, "t": "21:28:14"}
+{"event": "it", "epoch": 1, "it": 300, "n_it": 396, "loss": 0.20029442697763444, "sec": 97, "t": "21:28:51"}
+{"event": "epoch", "epoch": 1, "loss": 0.21142213804779028, "dev_eer": 2.6288937368439163, "sec": 155, "t": "21:29:49"}
+{"event": "saved_best", "epoch": 1, "dev_eer": 2.6288937368439163, "t": "21:29:49"}
+{"event": "it", "epoch": 2, "it": 0, "n_it": 396, "loss": 0.24633313715457916, "sec": 1, "t": "21:29:51"}
+{"event": "it", "epoch": 2, "it": 100, "n_it": 396, "loss": 0.1634563935175538, "sec": 30, "t": "21:30:20"}
+{"event": "it", "epoch": 2, "it": 200, "n_it": 396, "loss": 0.15266078166663646, "sec": 62, "t": "21:30:51"}
+{"event": "it", "epoch": 2, "it": 300, "n_it": 396, "loss": 0.1508265819773078, "sec": 98, "t": "21:31:28"}
+{"event": "epoch", "epoch": 2, "loss": 0.15192335286187103, "dev_eer": 2.712991299028512, "sec": 151, "t": "21:32:21"}
+{"event": "it", "epoch": 3, "it": 0, "n_it": 396, "loss": 0.21869786083698273, "sec": 1, "t": "21:32:22"}
+{"event": "it", "epoch": 3, "it": 100, "n_it": 396, "loss": 0.1462141666933894, "sec": 34, "t": "21:32:55"}
+{"event": "it", "epoch": 3, "it": 200, "n_it": 396, "loss": 0.14245687492191791, "sec": 71, "t": "21:33:32"}
+{"event": "it", "epoch": 3, "it": 300, "n_it": 396, "loss": 0.13718401852995157, "sec": 100, "t": "21:34:01"}
+{"event": "epoch", "epoch": 3, "loss": 0.1363220715265006, "dev_eer": 1.29566503259414, "sec": 163, "t": "21:35:04"}
+{"event": "saved_best", "epoch": 3, "dev_eer": 1.29566503259414, "t": "21:35:04"}
+{"event": "it", "epoch": 4, "it": 0, "n_it": 396, "loss": 0.06519007682800293, "sec": 1, "t": "21:35:04"}
+{"event": "it", "epoch": 4, "it": 100, "n_it": 396, "loss": 0.11646063026040793, "sec": 39, "t": "21:35:42"}
+{"event": "it", "epoch": 4, "it": 200, "n_it": 396, "loss": 0.10607277225703, "sec": 67, "t": "21:36:11"}
+{"event": "it", "epoch": 4, "it": 300, "n_it": 396, "loss": 0.10524696361273528, "sec": 104, "t": "21:36:48"}
+{"event": "epoch", "epoch": 4, "loss": 0.11097795709572507, "dev_eer": 1.0988764554426564, "sec": 161, "t": "21:37:44"}
+{"event": "saved_best", "epoch": 4, "dev_eer": 1.0988764554426564, "t": "21:37:44"}
+{"event": "it", "epoch": 5, "it": 0, "n_it": 396, "loss": 0.09311623871326447, "sec": 1, "t": "21:37:46"}
+{"event": "it", "epoch": 5, "it": 100, "n_it": 396, "loss": 0.10836872199550271, "sec": 34, "t": "21:38:18"}
+{"event": "it", "epoch": 5, "it": 200, "n_it": 396, "loss": 0.09998272232711315, "sec": 63, "t": "21:38:48"}
+{"event": "it", "epoch": 5, "it": 300, "n_it": 396, "loss": 0.09831435396336019, "sec": 99, "t": "21:39:23"}
+{"event": "epoch", "epoch": 5, "loss": 0.10186078814516841, "dev_eer": 1.4128411569977029, "sec": 155, "t": "21:40:19"}
+{"event": "it", "epoch": 6, "it": 0, "n_it": 396, "loss": 0.12291742116212845, "sec": 1, "t": "21:40:21"}
+{"event": "it", "epoch": 6, "it": 100, "n_it": 396, "loss": 0.09406174143776297, "sec": 34, "t": "21:40:53"}
+{"event": "it", "epoch": 6, "it": 200, "n_it": 396, "loss": 0.09782788958400487, "sec": 70, "t": "21:41:29"}
+{"event": "it", "epoch": 6, "it": 300, "n_it": 396, "loss": 0.0779838797543198, "sec": 101, "t": "21:42:00"}
+{"event": "epoch", "epoch": 6, "loss": 0.0903913383948325, "dev_eer": 0.9418941046651332, "sec": 162, "t": "21:43:01"}
+{"event": "saved_best", "epoch": 6, "dev_eer": 0.9418941046651332, "t": "21:43:01"}
+{"event": "it", "epoch": 7, "it": 0, "n_it": 396, "loss": 0.0910613089799881, "sec": 1, "t": "21:43:02"}
+{"event": "it", "epoch": 7, "it": 100, "n_it": 396, "loss": 0.07620030982419848, "sec": 39, "t": "21:43:41"}
+{"event": "it", "epoch": 7, "it": 200, "n_it": 396, "loss": 0.08696166019886732, "sec": 70, "t": "21:44:11"}
+{"event": "it", "epoch": 7, "it": 300, "n_it": 396, "loss": 0.07933550940826535, "sec": 104, "t": "21:44:45"}
+{"event": "epoch", "epoch": 7, "loss": 0.08082096725043775, "dev_eer": 1.1807314629089172, "sec": 160, "t": "21:45:41"}
+{"event": "it", "epoch": 8, "it": 0, "n_it": 396, "loss": 0.11188781261444092, "sec": 1, "t": "21:45:42"}
+{"event": "it", "epoch": 8, "it": 100, "n_it": 396, "loss": 0.07379989378154278, "sec": 38, "t": "21:46:19"}
+{"event": "it", "epoch": 8, "it": 200, "n_it": 396, "loss": 0.06762875926680863, "sec": 69, "t": "21:46:50"}
+{"event": "it", "epoch": 8, "it": 300, "n_it": 396, "loss": 0.07228380436077714, "sec": 108, "t": "21:47:29"}
+{"event": "epoch", "epoch": 8, "loss": 0.07147660776925734, "dev_eer": 1.207082360972875, "sec": 166, "t": "21:48:27"}
+{"event": "it", "epoch": 9, "it": 0, "n_it": 396, "loss": 0.08558119833469391, "sec": 2, "t": "21:48:29"}
+{"event": "it", "epoch": 9, "it": 100, "n_it": 396, "loss": 0.07700768003240227, "sec": 31, "t": "21:48:58"}
+{"event": "it", "epoch": 9, "it": 200, "n_it": 396, "loss": 0.07186064061243087, "sec": 59, "t": "21:49:26"}
+{"event": "it", "epoch": 9, "it": 300, "n_it": 396, "loss": 0.07321850911714137, "sec": 96, "t": "21:50:03"}
+{"event": "epoch", "epoch": 9, "loss": 0.07319255932022563, "dev_eer": 0.6279294031100869, "sec": 152, "t": "21:50:59"}
+{"event": "saved_best", "epoch": 9, "dev_eer": 0.6279294031100869, "t": "21:51:00"}
+{"event": "it", "epoch": 10, "it": 0, "n_it": 396, "loss": 0.01946575567126274, "sec": 1, "t": "21:51:00"}
+{"event": "it", "epoch": 10, "it": 100, "n_it": 396, "loss": 0.06331646400038153, "sec": 30, "t": "21:51:30"}
+{"event": "it", "epoch": 10, "it": 200, "n_it": 396, "loss": 0.06845845025032758, "sec": 66, "t": "21:52:06"}
+{"event": "it", "epoch": 10, "it": 300, "n_it": 396, "loss": 0.0666550122294575, "sec": 95, "t": "21:52:35"}
+{"event": "epoch", "epoch": 10, "loss": 0.06457910471892153, "dev_eer": 1.5698235077752203, "sec": 149, "t": "21:53:29"}
+{"event": "it", "epoch": 11, "it": 0, "n_it": 396, "loss": 0.019710518419742584, "sec": 0, "t": "21:53:29"}
+{"event": "it", "epoch": 11, "it": 100, "n_it": 396, "loss": 0.07079362840857356, "sec": 36, "t": "21:54:05"}
+{"event": "it", "epoch": 11, "it": 200, "n_it": 396, "loss": 0.06083308110479266, "sec": 67, "t": "21:54:35"}
+{"event": "it", "epoch": 11, "it": 300, "n_it": 396, "loss": 0.059419682072475555, "sec": 97, "t": "21:55:05"}
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/content/drive/MyDrive/voice-biometrics-detection/vbd/train_cm.py", line 113, in <module>
+  File "/content/drive/MyDrive/voice-biometrics-detection/vbd/train_cm.py", line 103, in main
+  File "/content/drive/MyDrive/voice-biometrics-detection/vbd/train_cm.py", line 80, in log
+FileNotFoundError: [Errno 2] No such file or directory: '/content/drive/MyDrive/voice-biometrics-detection/checkpoints/cm/lcnn_asv19la/log.jsonl'

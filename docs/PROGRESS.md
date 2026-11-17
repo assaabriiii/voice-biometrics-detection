@@ -323,3 +323,71 @@ Mean time per stage (50 requests): decode + resample 6 ms, ECAPA embedding 1,272
 ## 2026-11-17 01:20 UTC — git mirror
 
 Until now nothing had been committed to the project's git repository (everything was kept on Drive only). From this point the repo mirrors `vbd/`, `docs/`, `results/reports/*.csv`, `data/protocols/*.csv`, training logs (`results/train_logs/`) and launcher scripts. Models, embeddings, audio, caches and score files stay on Drive only. A handoff guide for other Claude models is in the repo root as `CLAUDE.md`.
+
+## 2026-11-17 03:40 UTC — S6a finished: LCNN and RawNet2 trained on ASVspoof 2019 LA, scored on the held-out evaluation split and on genuine Persian speech
+
+Ran on the second Google account's T4 runtime (project folder reached through the shared-folder shortcut). Launcher: `logs/chain_cm.sh` (bootstrap, LCNN resume, RawNet2), log `logs/chain_cm.log`. Evaluation: `python -m vbd.eval_cm`, log `logs/eval_cm.log`.
+
+### Training
+
+| Model | Params | Epochs | Time per epoch | Best dev EER (epoch) | Last-epoch dev EER | Checkpoint |
+|---|---|---|---|---|---|---|
+| LFCC-LCNN | 0.34 M | 30 | ~2.0 min | 0.58% (21) | 0.75% | `checkpoints/cm/lcnn_asv19la/best.pt` |
+| RawNet2 | 17.6 M | 20 | ~2.6 min | 1.38% (14) | 1.53% | `checkpoints/cm/rawnet2_asv19la/best.pt` |
+
+Both: 4 s inputs, class-balanced sampling, noise and telephone augmentation on both classes, checkpoint to Drive every epoch. RawNet2 took 52 minutes in total (the earlier guess of "a few hours" was wrong).
+
+### ASVspoof 2019 LA evaluation split (7,355 bona fide, 63,882 spoof; attacks A07-A19, none seen in training)
+
+Table: `results/reports/s6a_cm_asvspoof2019la.csv`. "Spoof accepted" and "bona fide rejected" use the threshold fixed at the development-set EER point (LCNN -1.93, RawNet2 -3.08) and applied unchanged.
+
+| | LCNN | RawNet2 |
+|---|---|---|
+| Dev EER | 0.58 | 1.38 |
+| **Eval EER, pooled** | **6.47** | **7.54** |
+| Eval spoof accepted at dev threshold | 12.25 | 16.50 |
+| Eval bona fide rejected at dev threshold | 0.84 | 1.51 |
+
+Per-attack EER % (each attack's 4,914 spoofs against all 7,355 bona fide):
+
+| Attack | LCNN | RawNet2 | | Attack | LCNN | RawNet2 |
+|---|---|---|---|---|---|---|
+| A07 | 1.22 | 3.02 | | A14 | 0.73 | 2.23 |
+| A08 | 0.81 | 5.21 | | A15 | 0.67 | 3.28 |
+| A09 | 0.20 | 0.69 | | A16 | 0.95 | 2.30 |
+| A10 | 1.43 | 3.48 | | A17 | 10.28 | 12.86 |
+| A11 | 0.71 | 3.01 | | A18 | 26.33 | 30.79 |
+| A12 | 1.12 | 4.07 | | A19 | 4.70 | 4.01 |
+| A13 | 0.47 | 1.02 | | | | |
+
+Reading:
+- Both models generalise to 10 of the 13 unseen attacks (LCNN below 1.5% EER on each). The pooled figure is dominated by the three voice-conversion attacks A17, A18, A19. At the dev threshold LCNN accepts 37% of A17 and 94% of A18; RawNet2 accepts 42% and 91%. A17 is the known hard case of this benchmark (waveform-filtering VC); A18 failing this badly is worse than published LCNN/RawNet2 numbers and is probably an effect of the telephone augmentation and of training on the train split only. Not investigated.
+- LCNN is better than RawNet2 on the pooled figure and on 12 of 13 attacks, with 50 times fewer parameters and 58 ms CPU time. RawNet2 wins only on A19.
+- These are English, studio-quality results. They do not count towards criterion 6, which is defined on Persian spoofs (S5/S6b).
+
+### False alarms on genuine Persian speech (FA-EVAL-120 test clips, 600 per condition, no spoofs involved)
+
+Table: `results/reports/s6a_cm_persian_bonafide_rejection.csv`. Share of genuine Persian clips rejected as spoof at the same dev-EER threshold:
+
+| Condition | LCNN | RawNet2 |
+|---|---|---|
+| clean | 6.00 | 13.00 |
+| ti5s (>= 5 s) | 5.33 | 12.17 |
+| noisy | 6.50 | 9.67 |
+| snr10 | 6.83 | 9.67 |
+| tel (simulated call) | 6.17 | 13.00 |
+| g711a | 7.33 | 10.67 |
+| amr_nb | 5.83 | 14.50 |
+| opus_nb | 3.50 | 15.00 |
+| **gsm_fr** | **22.83** | 17.00 |
+
+Reading:
+- On ASVspoof's own bona fide speech the same thresholds reject 0.84% (LCNN) and 1.51% (RawNet2). On genuine Persian Common Voice speech they reject 6% and 13% even with no codec. This is a domain shift (language, crowd-sourced microphones, MP3 source), not a channel effect: clean and telephone conditions are about the same, except GSM-FR for LCNN (22.8%).
+- Consequence for the system: used as they are, the detectors alone would add about 6 points (LCNN) to the false-reject rate, on top of the speaker engine's 10.2%. Criterion 8 (integrated FRR <= 12%) cannot be met without Persian fine-tuning of the detector and a threshold set on Persian validation data. That is what S6b is for; this table is the "before" measurement.
+- GSM-FR must be among the codecs applied to bona fide audio in S6b training.
+
+### Decision
+LCNN is the primary countermeasure candidate (better accuracy, far lower cost); RawNet2 is kept for the comparison table and as a possible second score in fusion. Final choice after S6b.
+
+### Next
+S5: Persian spoof generation (simulated replay, cloned TTS, voice conversion), starting with a quality test of candidate models on a few samples.

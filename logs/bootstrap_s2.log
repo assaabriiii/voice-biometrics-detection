@@ -1,0 +1,15 @@
+18:23:40 pip packages installed
+18:23:54 extracted common voice train
+18:24:02 extracted common voice dev
+18:24:12 extracted common voice test
+18:24:31 extracted common voice other
+18:25:32 extracted RIRS_NOISES
+18:30:07 extracted MUSAN
+18:30:10 static ffmpeg ready
+18:30:19 cache pool: 0/24356
+18:30:39 cache pool: 5000/24356
+18:31:02 cache pool: 10000/24356
+18:31:21 cache pool: 15000/24356
+18:31:42 cache pool: 20000/24356
+18:32:03 pool audio cache built
+18:32:03 BOOTSTRAP_DONE

@@ -1,6 +1,6 @@
 # Where we left off (read this first in a new session)
 
-Last updated: 2026-11-17 01:10 UTC. Nothing is running. Full history: `PROGRESS.md`. Plan and rules: `PROJECT_FLOW.md`. Runtime rebuild: `RESUME.md`.
+Last updated: 2026-11-17 03:45 UTC. Nothing is running. Full history: `PROGRESS.md`. Plan and rules: `PROJECT_FLOW.md`. Runtime rebuild: `RESUME.md`.
 
 ## Speaker verification (S0-S4): finished for now
 
@@ -15,28 +15,33 @@ Last updated: 2026-11-17 01:10 UTC. Nothing is running. Full history: `PROGRESS.
 - Stage 3 gave almost nothing; stage2v2 is the simpler choice for the system unless a later decision says otherwise.
 - All measurements are text-independent (text-dependent mode is not measurable with public data).
 
-## Countermeasure (S6a): partly done
-- LCNN on ASVspoof 2019 LA: 11 of 30 epochs done, best dev EER 0.63% (epoch 9). `checkpoints/cm/lcnn_asv19la/{best,last}.pt`. Resume continues from epoch 11.
-- RawNet2: not started.
+## Countermeasure (S6a): finished
 
-## To continue (needs a GPU runtime)
+| Model | Checkpoint | Dev EER | ASVspoof 2019 LA eval EER | Genuine Persian speech rejected (clean / tel / gsm_fr) |
+|---|---|---|---|---|
+| LFCC-LCNN (primary candidate) | `checkpoints/cm/lcnn_asv19la/best.pt` | 0.58 | 6.47 | 6.0 / 6.2 / 22.8 |
+| RawNet2 | `checkpoints/cm/rawnet2_asv19la/best.pt` | 1.38 | 7.54 | 13.0 / 13.0 / 17.0 |
+
+- Both fail on voice-conversion attacks A17 and A18 of the evaluation split (LCNN EER 10.3 and 26.3); the other 11 attacks are below 5% for LCNN.
+- Both reject too much genuine Persian speech at the ASVspoof threshold (domain shift). They need Persian fine-tuning and a Persian validation threshold (S6b) before fusion.
+- Re-run the scoring: `python -m vbd.eval_cm` (about 10 minutes on a T4, after `python -m vbd.bootstrap`). Tables: `results/reports/s6a_cm_*.csv`.
+
+## To continue
 ```python
 from google.colab import drive; drive.mount('/content/drive')
 ```
 ```bash
 cd /content/drive/MyDrive/voice-biometrics-detection
-python -m vbd.bootstrap                         # ~9 min; rebuilds /content/work (Common Voice, RIRs, MUSAN, pool cache)
-nohup sh -c "python -m vbd.train_cm --model lcnn --epochs 30 --bs 64 --lr 3e-4 --resume && python -m vbd.train_cm --model rawnet2 --epochs 20 --bs 32 --lr 1e-4 --resume" >> logs/chain_cm.log 2>&1 &
-grep -E '"event": "(epoch|saved_best|done|resumed)"' checkpoints/cm/*/log.jsonl
+python -m vbd.bootstrap        # ~9 min; rebuilds /content/work (Common Voice, RIRs, MUSAN, pool cache)
 ```
-`train_cm` rebuilds the ASVspoof caches from the parquet files on Drive by itself (a few minutes). LCNN needs about 50 more minutes; RawNet2 time is unknown (not yet run; expect a few hours).
+Next job is S5 (no code written yet): test candidate Persian voice-cloning TTS and voice-conversion models on a few FA-EVAL-120 speakers, then write `vbd/spoof_gen.py` to generate the full set into `data/spoof/` on Drive.
 
 ## Remaining work
-1. S6a: finish LCNN, train RawNet2; report ASVspoof 2019 LA evaluation-split EER for both. ASVspoof 2019 PA source still missing (official host returned 403).
+1. S6a: done (see above). ASVspoof 2019 PA source still missing (official host returned 403).
 2. S5: generate 3,600 Persian spoofs for the 120 speakers — simulated replay (CPU), cloned TTS and voice conversion (GPU). Candidate models are listed in PROGRESS.md; none tested.
 3. S6b: fine-tune both countermeasures on Persian spoofs inside the 5-fold protocol; leave-one-attack-out; check that noisy/telephone bona fide audio is not rejected.
 4. S7: fuse speaker and liveness scores; integrated FAR / FRR / spoof acceptance (criteria 7, 8).
-5. S8: CPU latency p95 over 200 requests (criterion 9); embedding-only template store (criterion 10). CPU runtime is enough.
+5. S8: first pass done (see below); still open: latency optimisation or an 8-core measurement, encryption of stored vectors.
 6. S9: demo UI, final evaluation report, reproduction scripts. CPU runtime is enough.
 7. Optional, for the FRR target: more Persian training speakers (lower the 8-clip pool minimum), a stronger pretrained backbone, or multi-utterance test input.
 
@@ -49,3 +54,7 @@ grep -E '"event": "(epoch|saved_best|done|resumed)"' checkpoints/cm/*/log.jsonl
 ## Added 2026-11-17 01:25 UTC
 - S8 first pass done on CPU: `vbd/system.py` (enrol / verify / embedding-only SQLite store). Latency p95 2.30 s on 2 vCPUs (target <= 2 s on 8 cores: unverified on the specified hardware; ECAPA embedding is 94% of the time, no optimisation tried). Storage inspection passed. Still open in S8: latency optimisation or an 8-core measurement, encryption of stored vectors.
 - The git repository (github.com/assaabriiii/voice-biometrics-detection) now mirrors code, docs, protocol files, small result tables and training logs; `CLAUDE.md` in the repo root is the handoff guide for any Claude model. Sync method: a Colab cell zips those files and calls `google.colab.files.download`, the zip lands in `~/Downloads` on the Mac, then copy into the repo, commit, push. Do this at the end of every session.
+
+## Added 2026-11-17 03:45 UTC
+- S6a finished on the second Google account's GPU (shared-folder shortcut; see `CLAUDE.md` in the git repo for the two-account setup). Details and per-attack table: PROGRESS.md entry of 2026-11-17 03:40 UTC.
+- New code: `vbd/eval_cm.py`. New launcher: `logs/chain_cm.sh`.
