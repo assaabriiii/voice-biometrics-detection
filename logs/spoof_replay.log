@@ -1,0 +1,8 @@
+03:41:25 speaker 0 / 120
+03:41:30 speaker 20 / 120
+03:41:35 speaker 40 / 120
+03:41:41 speaker 60 / 120
+03:41:46 speaker 80 / 120
+03:41:51 speaker 100 / 120
+03:41:57 clips 1200 speakers 120 per device {'replay_phone': 400, 'replay_laptop': 400, 'replay_external': 400} min per speaker 10 hours 1.5
+03:41:57 REPLAY_DONE

@@ -1,0 +1,10 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Could not parse CUDA device string 'cuda': not enough values to unpack (expected 2, got 1). Falling back to device 0.
+[W1117 03:44:36.718114423 CUDACachingAllocator.cpp:3934] memory allocation failed with OOM on device 0 while trying to allocate 689963008 bytes (free: 50135040, total: 15637086208).
+03:44:54 SV pooled threshold 0.292 | genuine clean median 0.562 accept 94.0% | impostor median 0.004
+   set          system    n  sv_cos_median  sv_accept_pct  lcnn_eer  lcnn_spoof_accept_at_asv_thr  lcnn_pass_both_pct  rawnet2_eer  rawnet2_spoof_accept_at_asv_thr  rawnet2_pass_both_pct
+replay replay_external  400           0.50          90.50     39.00                         93.25               84.50        41.71                            70.50                  64.00
+replay   replay_laptop  400           0.45          81.75     38.71                         93.50               76.50        48.79                            81.00                  65.25
+replay    replay_phone  400           0.43          81.50     39.50                         96.00               78.00        47.29                            84.75                  69.50
+replay             all 1200           0.46          84.58     39.17                         94.25               79.67        46.17                            78.75                  66.25
+03:45:02 EVAL_SPOOF_DONE

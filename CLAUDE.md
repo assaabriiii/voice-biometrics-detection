@@ -36,7 +36,7 @@ The plan, the 10 acceptance criteria and every deviation from the proposal are i
 | Protocol (speakers, folds, exclusions) | `data/protocols/` |
 | Models, embeddings, raw data, trial score files | Drive only |
 
-`vbd/` modules: `config` (paths, constants), `data` (manifest, FA-EVAL-120 selection, folds, pool), `augment` (noise, reverb, codecs), `cache` / `codec_cache` (decoded-audio memmaps), `metrics` (EER, FAR/FRR, bootstrap), `sv` (embeddings, scoring, AS-norm, reports), `conditions` (test conditions + evaluation), `train_sv` (stage 2), `train_sv3` (stage 3 per-fold adaptation), `cm` (LCNN, RawNet2), `train_cm` (CM on ASVspoof), `eval_cm` (CM scoring on the ASVspoof evaluation split and on genuine Persian speech), `system` (enrol/verify service + embedding-only store), `bootstrap` (rebuild Colab working dir).
+`vbd/` modules: `config` (paths, constants), `data` (manifest, FA-EVAL-120 selection, folds, pool), `augment` (noise, reverb, codecs), `cache` / `codec_cache` (decoded-audio memmaps), `metrics` (EER, FAR/FRR, bootstrap), `sv` (embeddings, scoring, AS-norm, reports), `conditions` (test conditions + evaluation), `train_sv` (stage 2), `train_sv3` (stage 3 per-fold adaptation), `cm` (LCNN, RawNet2), `train_cm` (CM on ASVspoof), `eval_cm` (CM scoring on the ASVspoof evaluation split and on genuine Persian speech), `spoof_replay` (simulated replay set), `spoof_probe` (voice-conversion / cloned-TTS trial on a few speakers), `eval_spoof` (score a spoof set with the speaker engine and the detectors), `system` (enrol/verify service + embedding-only store), `bootstrap` (rebuild Colab working dir).
 
 ## Which file is authored where
 
@@ -68,18 +68,21 @@ Lessons already paid for:
 - `pgrep -f train_sv` matches its own shell; use `pgrep -f "[v]bd.train_sv"`.
 - System ffmpeg lacks AMR-NB; a static build is stored at `tools/ffmpeg` on Drive (the user approved that download) and copied to `/content/work/ffmpeg_static` by bootstrap.
 - Per-clip ffmpeg calls are slow; use `augment.codec_batch`.
+- The sync download can be blocked by Chrome ("download multiple files"). If the zip does not appear in `~/Downloads`, ask the user to set Automatic downloads to Allow in the Colab tab's site settings and run the cell by hand.
+- The Claude Code permission system may block launching voice-cloning jobs or cells that fetch third-party code. Do not work around it; tell the user what is needed and continue with other work.
+- The Colab tab can be replaced by a fresh CPU runtime without warning (cells gone, Drive unmounted). Check `nvidia-smi` and the mount at the start of every session; only the user can switch the runtime type to T4.
 
 ## Evaluation protocol in one paragraph
 
 FA-EVAL-120: 120 Common Voice Persian speakers, 5 speaker-disjoint folds of 24. Per speaker 5 enrolment clips and 15 test clips (5 clean, 5 noisy, 5 simulated telephone). Each test clip is scored against all 24 templates of its fold: 1,800 genuine and 41,400 impostor trials (`main15`). Rotation k: test fold k, validation fold k+1, the other three for adaptation. Thresholds come from the validation fold at FAR 0.8% (and 0.1%) and are applied unchanged to the test fold. Extra controlled conditions use the clean clips: noise at 10 dB, GSM-FR, AMR-NB, G.711, Opus, and a >= 5 s set. Everything is text-independent because public Persian data has no repeated passphrases.
 
-## Status snapshot (2026-11-17 03:45 UTC; `docs/STATE.md` is authoritative)
+## Status snapshot (2026-11-17 06:20 UTC; `docs/STATE.md` is authoritative)
 
 - SV reported model: `checkpoints/sv/stage2v2/best.pt`. On `main15`: FAR 0.82% (target <= 1, met), **FRR 10.22% (target <= 10, missed)**; all EER targets met on point estimates. Per-fold adaptation (stage 3) gave 10.17%, a near-null result.
 - CM base training done on ASVspoof 2019 LA: LCNN eval EER 6.47% (dev 0.58%), RawNet2 7.54% (dev 1.38%). Both fail on voice-conversion attacks A17/A18, and both wrongly reject genuine Persian speech at the ASVspoof threshold (LCNN 6%, 23% on GSM-FR; RawNet2 13%), so Persian fine-tuning is required before fusion. LCNN is the primary candidate.
 - Service logic and embedding-only store: `vbd/system.py` (thresholds are placeholders until fusion is done). Storage inspection passed (one SQLite file, vectors only).
 - Latency: p95 2.30 s on Colab's 2-vCPU CPU runtime (target <= 2 s on an 8-core CPU, so unverified on the specified hardware). ECAPA embedding is 94% of the time; no optimisation tried yet.
-- Persian spoofs: 1,200 simulated replay clips done (`vbd/spoof_replay.py`); untrained detectors are near chance on them (`vbd/eval_spoof.py`). Cloned TTS and voice conversion not started; `vbd/spoof_probe.py` is written but unrun (see `docs/STATE.md`).
+- Persian spoofs: 1,200 simulated replay clips done (`vbd/spoof_replay.py`); untrained detectors are near chance on them (`vbd/eval_spoof.py`). Cloned TTS and voice conversion: probed on 6 speakers with kNN-VC and MMS Persian TTS (`vbd/spoof_probe.py`; every converted clip passed the speaker engine), bulk generation not done. `docs/STATE.md` has the design for `vbd/spoof_gen.py`, which is the next job.
 - Not started: CM fine-tuning on Persian spoofs, score fusion, demo UI, final report.
 
 ## Syncing Drive to this repo
@@ -89,7 +92,7 @@ There is no direct path from Drive to the Mac. The method that worked: a Colab c
 ## Next steps, in order
 
 1. Done: LCNN and RawNet2 on ASVspoof 2019 LA, scored with `python -m vbd.eval_cm`.
-2. Generate 3,600 Persian spoofs for the 120 speakers (1,200 each: simulated replay, cloned TTS, voice conversion). Candidate open models are listed in `docs/PROGRESS.md`; none is tested. Test quality on a few samples before generating in bulk.
+2. Persian spoofs, 3,600 for the 120 speakers: simulated replay done (1,200). Still to generate: 1,200 voice conversion and 1,200 cloned TTS with the probed kNN-VC / MMS pipeline, plus a small second system of each kind for the unseen-attack test (candidates in `docs/PROGRESS.md`, untested).
 3. Fine-tune the CMs on Persian spoofs inside the 5-fold protocol; leave-one-attack-out; confirm noisy/telephone bona fide audio is not flagged.
 4. Fuse SV and CM scores; measure integrated FAR, FRR and spoof acceptance (criteria 7, 8).
 5. CPU latency (criterion 9) and embedding-only storage inspection (criterion 10).

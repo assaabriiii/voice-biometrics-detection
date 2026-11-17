@@ -418,8 +418,34 @@ Reading:
 - This is the "before" number for S6b. It also shows the cost of not having ASVspoof 2019 PA (the replay part of the benchmark; download blocked with HTTP 403): replay detection has to be learnt entirely from the simulated Persian set.
 - A warning about a failed 690 MB GPU allocation appeared in `logs/eval_spoof_replay.log`; the run finished and wrote its table. Not investigated.
 
-### Cloned TTS and voice conversion: not started
-`vbd/spoof_probe.py` is written (kNN-VC voice conversion, MMS Persian TTS, and TTS followed by kNN-VC, on 6 speakers, scored with the speaker engine and both detectors) but has NOT been run: the Claude Code permission system blocked the launch. Waiting for the user's decision.
+### Cloned TTS and voice conversion
+Not generated yet at this point; see the probe entry below.
 
-### Git mirror gap
-The browser did not deliver the second sync archive of this session. `vbd/spoof_replay.py`, `vbd/eval_spoof.py`, `vbd/spoof_probe.py`, `data/protocols/fa_spoof_replay.csv`, `results/reports/s5_replay_zeroshot.csv` and the two S5 logs exist on Drive only until the next sync.
+### Git mirror
+The replay code, index, result table and logs reached the repo later the same day (the browser had blocked the download until the user re-allowed automatic downloads for the Colab tab).
+
+## 2026-11-17 06:10 UTC — S5 probe: voice conversion and cloned TTS on 6 speakers (first Persian synthetic spoofs)
+
+The user approved the run. `python -m vbd.spoof_probe 6` on a CPU-only runtime (the script now picks GPU or CPU by itself); 15 minutes in total, about 1.7 minutes per speaker on CPU. Log `logs/spoof_probe.log`, scores `results/reports/s5_probe_scores.csv`, the 60 audio files in Drive `data/spoof/probe/` for listening.
+
+Systems tried:
+- **knnvc**: kNN-VC (`torch.hub` `bshall/knn-vc`, WavLM-Large features + HiFi-GAN, language-independent). Source: a clean test clip of another evaluation speaker from a different fold. Target: 12 clips of the victim that are neither enrolment nor test clips (46-70 s in total).
+- **mms**: `facebook/mms-tts-fas` (Persian VITS, one fixed voice, 16 kHz, takes Persian script directly) reading Common Voice sentences. No cloning; included as a reference.
+- **mms_knnvc**: the MMS output converted to the victim's voice with kNN-VC, i.e. a cloned-TTS attack.
+
+6 speakers (4 M, 2 F), 2 clips per speaker per system, 12 clips per row. Speaker threshold 0.292 (pooled, FAR 0.8%, same as the replay check). Detector thresholds are the ASVspoof dev-EER points (LCNN -1.93, RawNet2 -3.08).
+
+| Clips | Mean cosine to victim's template | Pass speaker engine | Pass LCNN | Pass RawNet2 |
+|---|---|---|---|---|
+| genuine (victim's own clean test clips) | 0.588 | 12 / 12 | 12 / 12 | 12 / 12 |
+| impostor (the VC source speakers, unconverted) | 0.024 | 0 / 12 | 8 / 12 | 7 / 12 |
+| knnvc | 0.467 | 12 / 12 | 9 / 12 | 10 / 12 |
+| mms (fixed TTS voice) | 0.002 | 0 / 12 | 2 / 12 | 6 / 12 |
+| mms_knnvc (cloned TTS) | 0.449 | 12 / 12 | 5 / 12 | 8 / 12 |
+
+Reading (12 clips per row, so these are indications, not rates):
+- kNN-VC is an effective attack on the speaker engine: every converted clip passed, both from human speech and from TTS, with about one minute of the victim's audio. It is suitable for bulk generation of both the voice-conversion and the cloned-TTS sets.
+- The ASVspoof-trained detectors miss most kNN-VC audio (LCNN passes 9 of 12 VC clips and 5 of 12 cloned-TTS clips). Raw MMS output is mostly caught by LCNN (10 of 12 rejected).
+- The detectors also rejected 4-5 of 12 genuine clips of the source speakers, consistent with the false-alarm problem measured in S6a.
+- Audio quality was not judged by ear by anyone yet; the files are on Drive for that.
+- Only one VC system and one TTS system were tried. The proposal's unseen-attack test needs at least one more system of each kind (candidates listed in the 2026-11-16 19:30 entry; none of those tested).

@@ -1,0 +1,97 @@
+05:52:51 pip packages installed
+05:53:08 extracted common voice train
+05:53:13 extracted common voice dev
+05:53:19 extracted common voice test
+05:53:30 extracted common voice other
+05:53:33 static ffmpeg ready
+05:53:33 BOOTSTRAP_DONE
+05:53:48 roles {'adapt': 29584, 'test': 1800, 'enrol': 600}
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+/usr/local/lib/python3.13/dist-packages/torch/nn/utils/weight_norm.py:145: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+Downloading: "https://github.com/bshall/knn-vc/zipball/master" to /root/.cache/torch/hub/master.zip
+Downloading: "https://github.com/bshall/knn-vc/releases/download/v0.1/prematch_g_02500000.pt" to /root/.cache/torch/hub/checkpoints/prematch_g_02500000.pt
+Removing weight norm...
+[HiFiGAN] Generator loaded with 16,523,393 parameters.
+Downloading: "https://github.com/bshall/knn-vc/releases/download/v0.1/WavLM-Large.pt" to /root/.cache/torch/hub/checkpoints/WavLM-Large.pt
+WavLM-Large loaded with 315,453,120 parameters.
+05:54:38 knn-vc loaded
+/usr/local/lib/python3.13/dist-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+05:55:04 mms loaded, sr 16000 uroman False
+05:55:10 S01155 M refs 12 ref sec 53.7
+05:56:51 S01461 F refs 12 ref sec 69.5
+05:58:37 S03525 M refs 12 ref sec 68.2
+06:00:33 S03996 F refs 12 ref sec 57.7
+06:02:19 S00986 M refs 12 ref sec 45.8
+06:03:58 S01753 M refs 12 ref sec 57.4
+   spk    system name   sec  sv_cos  live_lcnn  live_rawnet2
+S01155   genuine   t0 4.536   0.564      3.495         4.203
+S01155   genuine   t1 3.492   0.599      9.627         0.235
+S01155  impostor   s0 5.688  -0.004     -1.932        -3.293
+S01155     knnvc   s0 5.680   0.438     -5.272        -0.935
+S01155  impostor   s1 4.464  -0.125     11.173        -3.316
+S01155     knnvc   s1 4.440   0.494      4.350         3.588
+S01155       mms   x0 3.088  -0.061    -13.131        -3.738
+S01155 mms_knnvc   x0 3.080   0.327      0.123        -2.020
+S01155       mms   x1 5.216  -0.259     -2.981        -2.975
+S01155 mms_knnvc   x1 5.200   0.509      0.374         2.280
+S01461   genuine   t0 7.464   0.706      0.905         4.414
+S01461   genuine   t1 3.576   0.620     11.397        -0.115
+S01461  impostor   s0 3.348   0.112     -5.009        -4.744
+S01461     knnvc   s0 3.340   0.434      2.774         4.689
+S01461  impostor   s1 4.068  -0.026      7.870         1.241
+S01461     knnvc   s1 4.060   0.404     -6.148         8.847
+S01461       mms   x0 2.912  -0.035     -0.841        -0.314
+S01461 mms_knnvc   x0 2.900   0.374    -12.256         3.305
+S01461       mms   x1 3.296   0.143     -9.308        -4.724
+S01461 mms_knnvc   x1 3.280   0.436     -7.273         5.684
+S03525   genuine   t0 5.688   0.645      2.511         2.963
+S03525   genuine   t1 5.304   0.623      3.477         2.791
+S03525  impostor   s0 3.456   0.089      8.520         4.265
+S03525     knnvc   s0 3.440   0.458      9.677         0.031
+S03525  impostor   s1 3.708  -0.047      8.988         9.621
+S03525     knnvc   s1 3.700   0.548      5.173        -7.543
+S03525       mms   x0 3.872  -0.250    -13.057        -1.598
+S03525 mms_knnvc   x0 3.860   0.556     -2.302        -2.991
+S03525       mms   x1 2.544  -0.044     -6.493        -6.577
+S03525 mms_knnvc   x1 2.520   0.592     -3.259        -3.410
+S03996   genuine   t0 3.348   0.631      9.134         6.401
+S03996   genuine   t1 5.040   0.621      3.100         0.744
+S03996  impostor   s0 4.824   0.036      7.183         5.481
+S03996     knnvc   s0 4.800   0.508      0.354         2.783
+S03996  impostor   s1 3.096   0.032     -5.033        -5.694
+S03996     knnvc   s1 3.080   0.424     -7.634        -2.245
+S03996       mms   x0 2.800  -0.024    -12.276        -1.791
+S03996 mms_knnvc   x0 2.780   0.410     -7.842        -1.008
+S03996       mms   x1 2.880  -0.054     -8.560        -8.690
+S03996 mms_knnvc   x1 2.860   0.458    -12.161         3.335
+S00986   genuine   t0 4.248   0.593     -1.290         3.833
+S00986   genuine   t1 3.960   0.612     10.039         5.064
+S00986  impostor   s0 5.424   0.007      4.410        -1.380
+S00986     knnvc   s0 5.400   0.558      6.452         3.604
+S00986  impostor   s1 6.948   0.023     -2.809        -7.498
+S00986     knnvc   s1 6.940   0.573     -0.867        -5.671
+S00986       mms   x0 3.616   0.244      1.003         3.108
+S00986 mms_knnvc   x0 3.600   0.500      0.445        -7.661
+S00986       mms   x1 2.480   0.183     -6.030         0.304
+S00986 mms_knnvc   x1 2.460   0.473      5.170        -1.572
+S01753   genuine   t0 4.860   0.326     10.980         3.461
+S01753   genuine   t1 4.392   0.518      7.299         4.359
+S01753  impostor   s0 4.680   0.123      4.978         0.086
+S01753     knnvc   s0 4.660   0.449     10.198         7.605
+S01753  impostor   s1 4.080   0.071      9.544         7.316
+S01753     knnvc   s1 4.060   0.319      9.743         8.856
+S01753       mms   x0 2.896   0.201     -8.631        -9.223
+S01753 mms_knnvc   x0 2.880   0.375     -6.182        -7.156
+S01753       mms   x1 5.744  -0.025    -11.278        -5.975
+S01753 mms_knnvc   x1 5.720   0.378     -1.221        -6.349
+          sv_cos               live_lcnn                 live_rawnet2                  sec              
+            mean    min    max      mean     min     max         mean    min    max   mean    min    max
+system                                                                                                  
+genuine    0.588  0.326  0.706     5.889  -1.290  11.397        3.196 -0.115  6.401  4.659  3.348  7.464
+impostor   0.024 -0.125  0.123     3.990  -5.033  11.173        0.174 -7.498  9.621  4.482  3.096  6.948
+knnvc      0.467  0.319  0.573     2.400  -7.634  10.198        1.967 -7.543  8.856  4.467  3.080  6.940
+mms        0.002 -0.259  0.244    -7.632 -13.131   1.003       -3.516 -9.223  3.108  3.445  2.480  5.744
+mms_knnvc  0.449  0.327  0.592    -3.865 -12.256   5.170       -1.464 -7.661  5.684  3.428  2.460  5.720
+06:08:43 PROBE_DONE
