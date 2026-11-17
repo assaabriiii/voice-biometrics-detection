@@ -45,3 +45,7 @@ grep -E '"event": "(epoch|saved_best|done|resumed)"' checkpoints/cm/*/log.jsonl
 - Text-dependent mode not measurable; accent stratification not possible; female share 27% (proposal: 40%).
 - Duplicate-identity screen is a cosine > 0.5 heuristic on embeddings.
 - `vbd/bootstrap.py` does not rebuild the `adapt` cache or its codec copies (only needed to re-run stage 3; commands are in PROGRESS.md / `logs/chain_s3_cm.sh`).
+
+## Added 2026-11-17 01:25 UTC
+- S8 first pass done on CPU: `vbd/system.py` (enrol / verify / embedding-only SQLite store). Latency p95 2.30 s on 2 vCPUs (target <= 2 s on 8 cores: unverified on the specified hardware; ECAPA embedding is 94% of the time, no optimisation tried). Storage inspection passed. Still open in S8: latency optimisation or an 8-core measurement, encryption of stored vectors.
+- The git repository (github.com/assaabriiii/voice-biometrics-detection) now mirrors code, docs, protocol files, small result tables and training logs; `CLAUDE.md` in the repo root is the handoff guide for any Claude model. Sync method: a Colab cell zips those files and calls `google.colab.files.download`, the zip lands in `~/Downloads` on the Mac, then copy into the repo, commit, push. Do this at the end of every session.
