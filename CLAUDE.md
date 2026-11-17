@@ -16,7 +16,7 @@ The plan, the 10 acceptance criteria and every deviation from the proposal are i
 1. **Never run project code on the user's Mac.** All execution happens on Google Colab through the Colab MCP (`mcp__colab-mcp__*`). Local actions are limited to editing files in this repo and git.
 2. **Everything lives on Google Drive** at `MyDrive/voice-biometrics-detection/` (code, data, checkpoints, results, docs). Drive is not mounted on the Mac; reach it by mounting it inside Colab.
 3. **This git repo mirrors the Drive copy of code, docs and small result tables.** After any change to `vbd/` or `docs/` on Drive, sync it here, commit and push. Never commit models, audio, caches or large files (see `.gitignore`).
-4. **Keep the progress log detailed**: append to `docs/PROGRESS.md` after every meaningful step (what ran, numbers, failures, next). Update `docs/STATE.md` at the end of every session.
+4. **Keep the progress log detailed**: append to `docs/PROGRESS.md` after every meaningful step (what ran, numbers, failures, next). Update `docs/STATE.md` at the end of every session. **Update the Status and Evidence columns in `docs/REQUIREMENTS.md` whenever a result changes.** The final project report will be written from these three files, so every number in them must be traceable to a result table or log.
 5. **No voice recording by the user.** Public datasets and software simulation only. Each substitution for the proposal's recorded data is listed in `docs/PROJECT_FLOW.md` section 3.
 6. **Checkpoint every epoch to Drive** so a Colab disconnect loses at most one epoch.
 7. **No leakage**: test-fold speakers never enter training, adaptation, cohorts or threshold setting. Thresholds are fixed on validation folds only.
@@ -28,6 +28,7 @@ The plan, the 10 acceptance criteria and every deviation from the proposal are i
 |---|---|
 | Current state and exact resume commands | `docs/STATE.md` (read first) |
 | Full history with all result tables | `docs/PROGRESS.md` |
+| Proposal requirements, acceptance criteria, demo scenario, deliverables, each with current status | `docs/REQUIREMENTS.md` |
 | Plan, criteria, substitutions, rules | `docs/PROJECT_FLOW.md` |
 | Rebuilding a fresh Colab runtime | `docs/RESUME.md` |
 | Code package | `vbd/` |
@@ -36,6 +37,18 @@ The plan, the 10 acceptance criteria and every deviation from the proposal are i
 | Models, embeddings, raw data, trial score files | Drive only |
 
 `vbd/` modules: `config` (paths, constants), `data` (manifest, FA-EVAL-120 selection, folds, pool), `augment` (noise, reverb, codecs), `cache` / `codec_cache` (decoded-audio memmaps), `metrics` (EER, FAR/FRR, bootstrap), `sv` (embeddings, scoring, AS-norm, reports), `conditions` (test conditions + evaluation), `train_sv` (stage 2), `train_sv3` (stage 3 per-fold adaptation), `cm` (LCNN, RawNet2), `train_cm` (CM on ASVspoof), `system` (enrol/verify service + embedding-only store), `bootstrap` (rebuild Colab working dir).
+
+## Which file is authored where
+
+- `docs/PROGRESS.md`, `docs/STATE.md`, `docs/PROJECT_FLOW.md`, `docs/RESUME.md` and `vbd/` are written on Drive from Colab and mirrored into this repo.
+- `CLAUDE.md` and `docs/REQUIREMENTS.md` are edited in this repo. After pushing, copy them to Drive from a Colab cell with `wget` on the raw GitHub URL (the repo is public), so both places match.
+
+## Google accounts
+
+- The Drive folder belongs to the user's main Google account. Its free Colab GPU allowance lasts about 3.5 hours a day.
+- A second Google account is used for extra GPU time. The project folder is shared with it as Editor and a shortcut sits in its My Drive, so the path `MyDrive/voice-biometrics-detection` is identical. Colab refused to mount the main account's Drive from the second account directly ("credential propagation was unsuccessful"); the shortcut is what works.
+- Files the second account creates count against its own 15 GB quota. Keep large caches on the Colab disk when working from it.
+- To open Colab under the second account, open the MCP notebook URL with `?authuser=1` before the `#` (for example with the Mac's `open` command), then call `open_colab_browser_connection`. Calling the connection tool with no tab open starts a notebook under the default (main) account.
 
 ## How to work on Colab
 
@@ -51,6 +64,7 @@ Lessons already paid for:
 - `run_code_cell` often returns before a long cell finishes. Re-read the cell with `get_cells` or use a small status cell; do not assume it failed.
 - Opening the MCP link in a new tab creates a **second runtime** (often CPU-only) and the MCP attaches to the newest tab. A job started earlier keeps running on the old runtime; monitor it through Drive logs and never start a second writer for the same run.
 - The notebook is an unsaved `empty.ipynb`; reloading its tab can kill the runtime. All durable code must be in `vbd/`, not in cells.
+- `get_cells` over a wide index range returns every cell's full source and is very large; request one or two cells at a time.
 - `pgrep -f train_sv` matches its own shell; use `pgrep -f "[v]bd.train_sv"`.
 - System ffmpeg lacks AMR-NB; a static build is stored at `tools/ffmpeg` on Drive (the user approved that download) and copied to `/content/work/ffmpeg_static` by bootstrap.
 - Per-clip ffmpeg calls are slow; use `augment.codec_batch`.
